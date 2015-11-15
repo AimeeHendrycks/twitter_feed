@@ -1,0 +1,82 @@
+{%extends 'base.html'%}
+{%load staticfiles%}
+{%block body%}
+
+<!--Searchbar-->
+<div class="text-center">
+    <div id="search-4" class="sidebar-widget  widget_search col-md-6 col-md-offset-3" style='margin-top:20px; margin-bottom:0px'>
+        <form role="search" method="get" id="searchform" action="/tweet_list/">
+            <div class="input-group">
+                <input type="text" value="" name="search" id="s" class="form-control" placeholder="Search Tweets">
+                <span class="input-group-btn">
+                <button class="btn" type="submit" id="searchsubmit" value="Search">
+                    <i class="fa fa-search"></i>
+                </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+{% if object_list|length != 0 %}
+    <!--pagination-->
+    <div class="text-center">
+        <div id="search-4" class="sidebar-widget  widget_search col-md-6 col-md-offset-3" style='margin-top:20px; margin-bottom:0px'>
+        <div class="pagination" style='margin-left:0px'>
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    {% if 'search' in request.GET %}
+                        <a href="{{request.path}}?search={{request.GET.search}}&page={{ page_obj.previous_page_number }}"><&nbsp</a>
+                    {% else %}
+                        <a href="{{request.path}}?page={{ page_obj.previous_page_number }}"><&nbsp</a>
+                    {% endif %}
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    {% if 'search' in request.GET %}
+                        <a href="{{request.path}}?search={{request.GET.search}}&page={{ page_obj.next_page_number }}">&nbsp></a>
+                    {% else %}
+                        <a href="{{request.path}}?page={{ page_obj.next_page_number }}">&nbsp></a>
+                    {% endif %}
+                {% endif %}
+            </span>
+
+        </div>
+        </div>
+    </div>
+{%endif%}
+<!--Content: list of tweets-->
+<body>
+<div style='margin:10%'>
+{%if object_list|length != 0 %}
+    {% for tweet in object_list %}
+    {% if tweet.screen_name != None %}
+      
+        <header class="post-head">
+            <div class='col-md-12' style='text-align:center'>
+            <h2 class="post-title">
+                <em>{{tweet.text}}</em></br>
+            </h2>
+            <span>
+                <img src='{{tweet.profile_image_url}}' alt='{{tweet.screen_name}}' style='width:2%; height:2%; margin:10px'>
+            </span>
+            <span>by {{tweet.screen_name}} | {{tweet.created_at}}</span>
+            </br>
+            <hr>
+            </div>
+        </header>
+
+    {% endif %}
+    {% endfor %}
+{%else%}
+
+            <div class='col-md-12' style='text-align:center; mergin-top:-20px'>
+    <p>Simply search for a topic that interests you such as "cats" or "video games" and see recent, related tweets</p>
+</div>
+{%endif%}
+
+</div>
+</body>
+{%endblock body%}
