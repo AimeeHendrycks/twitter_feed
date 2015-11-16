@@ -81,33 +81,4 @@
 
 </div>
 </body>
-{% if oblect_list|length != 0%}
-<!--pagination-->
-<div class="text-center">
-    <div id="search-4" class="sidebar-widget  widget_search col-md-6 col-md-offset-3" style='margin-top:20px; margin-bottom:0px'>
-    <div class="pagination" style='margin-left:0px'>
-        <span class="page-links">
-            {% if page_obj.has_previous %}
-                {% if 'search' in request.GET %}
-                    <a href="{{request.path}}?search={{request.GET.search}}&page={{ page_obj.previous_page_number }}"><&nbsp</a>
-                {% else %}
-                    <a href="{{request.path}}?page={{ page_obj.previous_page_number }}"><&nbsp</a>
-                {% endif %}
-            {% endif %}
-            <span class="page-current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-            </span>
-
-            {% if page_obj.has_next %}
-                {% if 'search' in request.GET %}
-                    <a href="{{request.path}}?search={{request.GET.search}}&page={{ page_obj.next_page_number }}">&nbsp></a>
-                {% else %}
-                    <a href="{{request.path}}?page={{ page_obj.next_page_number }}">&nbsp></a>
-                {% endif %}
-            {% endif %}
-        </span>
-    </div>
-    </div>
-</div>
-{%endif%}
 {%endblock body%}
