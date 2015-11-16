@@ -88,7 +88,7 @@ def populate_tweets(search_term):
                     new_tweet.profile_image_url = str(unidecode(tweet.get('user').get('profile_image_url')))
                 if tweet.get('user').get('screen_name') != None:
                     new_tweet.screen_name = str(unidecode(tweet.get('user').get('screen_name'))) 
-                new_tweet.created_at = tweet.get('created_at')
+                new_tweet.created_at = tweet.get('created_at').replace('+0000 ', '')
                 new_tweet.location =  str(unidecode(tweet_location))
                 new_tweet.search_term = SEARCH_TERM
 
